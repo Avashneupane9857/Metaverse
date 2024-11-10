@@ -5,6 +5,7 @@ import { adminRouter } from "./adminRouter";
 import { SignUp } from "../controllers/SignUp";
 import { SignIn } from "../controllers/SignIn";
 import { GetAvatars } from "../controllers/GetAvatars";
+import { Element } from "../controllers/Elements";
 
 export const routes = Router();
 
@@ -14,15 +15,7 @@ routes.post("/signin",SignIn)
 
 routes.get("/avatars",GetAvatars)
 
-routes.post("/space")
-
-routes.delete("/space/:spaceId")
-
-routes.get("/space/all")
-
-routes.get("/space/:spaceId")
-
-routes.get("/elements")
+routes.get("/elements",Element)
 
 
 

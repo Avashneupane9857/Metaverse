@@ -1,1 +1,1 @@
-{"root":["./src/index.ts","./src/router/routes.ts"],"version":"5.6.3"}
+{"root":["./src/config.ts","./src/index.ts","./src/controllers/signin.ts","./src/controllers/signup.ts","./src/router/adminrouter.ts","./src/router/routes.ts","./src/router/spacerouter.ts","./src/router/userrouter.ts","./src/types/index.ts"],"version":"5.6.3"}

@@ -4,6 +4,7 @@ import { spaceRouter } from "./spaceRouter";
 import { adminRouter } from "./adminRouter";
 import { SignUp } from "../controllers/SignUp";
 import { SignIn } from "../controllers/SignIn";
+import { GetAvatars } from "../controllers/GetAvatars";
 
 export const routes = Router();
 
@@ -11,7 +12,7 @@ routes.post("/signup",SignUp);
 
 routes.post("/signin",SignIn)
 
-routes.get("/avatars")
+routes.get("/avatars",GetAvatars)
 
 routes.post("/space")
 
@@ -33,3 +34,15 @@ routes.get("/elements")
 routes.use("/user",userRouter)
 routes.use("/space",spaceRouter)
 routes.use("/admin",adminRouter)
+
+
+
+
+
+
+
+
+
+
+
+

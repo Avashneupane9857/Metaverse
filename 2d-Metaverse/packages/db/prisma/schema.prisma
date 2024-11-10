@@ -29,7 +29,7 @@ model Space {
   width     Int
   height    Int
   thumbnail String?
-  creatroId String
+  creatroId String //creatorId: This field in the Space model is used to store the ID of the user who created the space. It is a foreign key that references the User model (User.id).
   creator   User            @relation(fields: [creatroId], references: [id])
   elements  spaceElements[]
 }

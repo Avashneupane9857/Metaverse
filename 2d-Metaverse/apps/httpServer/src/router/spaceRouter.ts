@@ -1,7 +1,7 @@
 import { prisma } from "@repo/db/prisma";
 import { Router } from "express";
-import { userMiddleware } from "src/middlewares/userMiddleware";
-import { AddElementSchema, CreateSpaceSchema, DeleteElementSchema } from "src/types";
+import { userMiddleware } from "../middlewares/userMiddleware";
+import { AddElementSchema, CreateSpaceSchema, DeleteElementSchema } from "../types";
 
 export const spaceRouter=Router()
 interface AuthenticatedRequest extends Request {
@@ -57,7 +57,7 @@ spaceRouter.delete("/:spaceId",userMiddleware,async(req:any,res:any)=>{
     }
     if (space.creatroId !== req.userId) {
         console.log("code should reach here")
-        res.status(403).json({message: "Unauthorized"})
+        res.status(400).json({message: "Unauthorized"})
         return
     }
 
@@ -187,7 +187,7 @@ spaceRouter.delete("/element",userMiddleware, async (req:AuthenticatedRequest, r
     console.log(spaceElement?.space)
     console.log("spaceElement?.space")
     if (!spaceElement?.space.creatroId || spaceElement.space.creatroId !== req.userId) {
-        res.status(403).json({message: "Unauthorized"})
+        res.status(400).json({message: "Unauthorized"})
         return
     }
     await prisma.spaceElements.delete({

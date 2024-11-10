@@ -1,7 +1,7 @@
 import { prisma } from "@repo/db/prisma";
 import { Router } from "express";
 import { adminMiddleware } from "../middlewares/adminMiddleware";
-import { CreateAvatarSchema, CreateElementSchema, CreateMapSchema, UpdateElementSchema } from "src/types";
+import { CreateAvatarSchema, CreateElementSchema, CreateMapSchema, UpdateElementSchema } from "../types";
 
 export const adminRouter=Router()
 adminRouter.use(adminMiddleware)

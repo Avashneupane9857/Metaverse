@@ -33,7 +33,7 @@ if(!passwordCheck){
     res.status(403).json({msg:"Passworr is not correct"})
 }
 
-const tokens=jwt.sign({username:parsedData.data.username},secret,{ expiresIn: '1h' })
+const tokens=jwt.sign({userId:user.id,role:user.role},secret )
 res.status(200).json({token:tokens})
 return
 }

@@ -13,3 +13,8 @@ export const SignInSchema = z.object({
   password: z.string(),
 
 });
+
+export const metadataSchema = z.object({
+avatarId:z.string()
+
+});

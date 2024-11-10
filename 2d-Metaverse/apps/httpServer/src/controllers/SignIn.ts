@@ -1,6 +1,5 @@
 import { prisma } from "@repo/db/prisma";
-import { Request, Response } from "express";
-import { SignInSchema } from "src/types";
+import { SignInSchema } from "../types";
 import * as bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken"
 import dotenv from 'dotenv';

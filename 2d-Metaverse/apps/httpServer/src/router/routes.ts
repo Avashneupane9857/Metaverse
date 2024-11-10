@@ -3,7 +3,7 @@ import { userRouter } from "./userRouter";
 import { spaceRouter } from "./spaceRouter";
 import { adminRouter } from "./adminRouter";
 import { SignUp } from "../controllers/SignUp";
-import { SignIn } from "src/controllers/SignIn";
+import { SignIn } from "../controllers/SignIn";
 
 export const routes = Router();
 

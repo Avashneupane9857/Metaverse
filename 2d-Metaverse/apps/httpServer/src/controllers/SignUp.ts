@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+
 import { SignUpSchema } from "../types"
 import {prisma} from "@repo/db/prisma"
 import bcrypt from "bcrypt"
@@ -7,7 +7,7 @@ const parsedData=SignUpSchema.safeParse(req.body)
 console.log(parsedData)
 if(!parsedData.success){
     return  res.status(400).json({msg:"Validataion err"})
-    
+    return
 }
 try
 {

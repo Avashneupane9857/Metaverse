@@ -6,7 +6,7 @@ import { CreateAvatarSchema, CreateElementSchema, CreateMapSchema, UpdateElement
 export const adminRouter = Router();
 adminRouter.use(adminMiddleware);
 
-// POST /element route
+
 adminRouter.post("/element", async (req, res) => {
     const parsedData = CreateElementSchema.safeParse(req.body);
     if (!parsedData.success) {
@@ -17,28 +17,43 @@ adminRouter.post("/element", async (req, res) => {
     try {
         const element = await prisma.element.create({
             data: {
+                
                 imageUrl: parsedData.data.imageUrl,
                 width: parsedData.data.width,
                 height: parsedData.data.height,
                 static: parsedData.data.static
             }
         });
-        res.status(200).json({ element });
+        console.log("elemtId is being printed",element.id)
+      res.status(200).json( element );
+        return
     } catch (error) {
         console.error("Error in posting elements:", error);
         res.status(500).json({ msg: "Error in posting elements" });
     }
 });
 
-// PUT /element/:elementId route
+
 adminRouter.put("/element/:elementId", async (req, res) => {
     const parsedData = UpdateElementSchema.safeParse(req.body);
     if (!parsedData.success) {
-        res.status(400).json({ message: "Validation failed" });
-        return;
+         res.status(400).json({ message: "Validation failed" });
+         return
     }
 
     try {
+      
+        const element = await prisma.element.findUnique({
+            where: { id: req.params.elementId },
+        });
+
+        if (!element) {
+             res.status(404).json({ message: "Element not found" });
+             console.log("i reached here no elemmet")
+             return
+        }
+
+
         await prisma.element.update({
             where: {
                 id: req.params.elementId
@@ -47,6 +62,7 @@ adminRouter.put("/element/:elementId", async (req, res) => {
                 imageUrl: parsedData.data.imageUrl
             }
         });
+
         res.status(200).json({ message: "Element updated" });
     } catch (error) {
         console.error("Failed to update element:", error);
@@ -54,7 +70,8 @@ adminRouter.put("/element/:elementId", async (req, res) => {
     }
 });
 
-// POST /avatar route
+
+
 adminRouter.post("/avatar", async (req, res) => {
     const parsedData = CreateAvatarSchema.safeParse(req.body);
     if (!parsedData.success) {
@@ -76,7 +93,7 @@ adminRouter.post("/avatar", async (req, res) => {
     }
 });
 
-// POST /map route
+
 adminRouter.post("/map", async (req, res) => {
     const parsedData = CreateMapSchema.safeParse(req.body);
     if (!parsedData.success) {

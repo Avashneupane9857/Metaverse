@@ -1,7 +1,7 @@
 import { prisma } from "@repo/db/prisma";
 import { Router } from "express";
 import { userMiddleware } from "../middlewares/userMiddleware";
-import { AddElementSchema, CreateSpaceSchema, DeleteElementSchema } from "../types";
+import {  AddElementSchema, CreateSpaceSchema, DeleteElementSchema } from "../types";
 
 export const spaceRouter=Router()
 interface AuthenticatedRequest extends Request {
@@ -25,7 +25,7 @@ spaceRouter.post("/",userMiddleware,async(req:AuthenticatedRequest,res:any)=>{
         }
     }
 )
-res.json({spaceId: space.id})
+res.status(200).json({spaceId: space.id})
 return;
 }}
 catch(e){
@@ -40,7 +40,7 @@ catch(e){
 spaceRouter.delete("/:spaceId",userMiddleware,async(req:any,res:any)=>{
     const spaceId=req.params.spaceId
     if(!spaceId){
-         res.status(403).json({msg:"Please provide spaceId"})
+         res.status(400).json({msg:"Please provide spaceId"})
          return
     }
 
@@ -52,7 +52,7 @@ spaceRouter.delete("/:spaceId",userMiddleware,async(req:any,res:any)=>{
         }
     })
     if (!space) {
-        res.status(403).json({message: "Space not found"})
+        res.status(400).json({message: "Space not found"})
         return
     }
     if (space.creatroId !== req.userId) {
@@ -66,7 +66,7 @@ spaceRouter.delete("/:spaceId",userMiddleware,async(req:any,res:any)=>{
             id:spaceId
         }
     })
-    res.status(200)
+    res.status(200).json({ message: "Space deleted successfully" });
 })
 
 spaceRouter.get("/all",userMiddleware,async(req:AuthenticatedRequest,res:any)=>{
@@ -132,7 +132,9 @@ res.json({
 })
 
 spaceRouter.post("/element",userMiddleware,async(req:any,res:any)=>{
+    console.log(req.body)
     const parsedData = AddElementSchema.safeParse(req.body)
+    console.log(parsedData)
     if (!parsedData.success) {
         res.status(400).json({message: "Validation failed"})
         return

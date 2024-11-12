@@ -30,12 +30,11 @@ export const DeleteElementSchema = z.object({
 })
 
 export const AddElementSchema = z.object({
-  spaceId: z.string(),
-  elementId: z.string(),
-  x: z.number(),
-  y: z.number(),
-})
-
+  elementId: z.string().min(1),  
+  spaceId: z.string().min(1),   
+  x: z.number().min(0),         
+  y: z.number().min(0),    
+});
 export const CreateElementSchema=z.object({
   imageUrl:z.string(),
   width:z.number(),

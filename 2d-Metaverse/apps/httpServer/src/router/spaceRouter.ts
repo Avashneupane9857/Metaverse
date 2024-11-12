@@ -29,7 +29,7 @@ res.json({spaceId: space.id})
 return;
 }}
 catch(e){
-    return res.status(400).json({msg:"error in space creation "})
+    return res.status(403).json({msg:"error in space creation "})
 }
 
     
@@ -40,7 +40,7 @@ catch(e){
 spaceRouter.delete("/:spaceId",userMiddleware,async(req:any,res:any)=>{
     const spaceId=req.params.spaceId
     if(!spaceId){
-         res.status(400).json({msg:"Please provide spaceId"})
+         res.status(403).json({msg:"Please provide spaceId"})
          return
     }
 
@@ -52,12 +52,12 @@ spaceRouter.delete("/:spaceId",userMiddleware,async(req:any,res:any)=>{
         }
     })
     if (!space) {
-        res.status(400).json({message: "Space not found"})
+        res.status(403).json({message: "Space not found"})
         return
     }
     if (space.creatroId !== req.userId) {
         console.log("code should reach here")
-        res.status(400).json({message: "Unauthorized"})
+        res.status(403).json({message: "Unauthorized"})
         return
     }
 

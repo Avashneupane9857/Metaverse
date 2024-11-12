@@ -47,5 +47,7 @@ export const adminMiddleware=(req:any,res:any,next:any)=>{
         }
         return res.status(500).json({ msg: "Internal server error" })
     }
-    next()
+    
 }
+
+

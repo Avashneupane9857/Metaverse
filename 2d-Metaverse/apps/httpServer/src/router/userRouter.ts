@@ -47,29 +47,43 @@ userRouter.post("/metadata", userMiddleware, async (req: AuthenticatedRequest, r
     }
 });
 
-
 userRouter.get("/metadata/bulk", async (req, res) => {
-try{
-    const ids=req.query.ids as string
-    const userIds=ids ? JSON.parse(ids):[]
-    const users = await prisma.user.findMany({
-        where: {
-            id: { in: userIds }
-        },
-        select: {
-            id: true,
-            avatar: true
+    try {
+        const ids = req.query.ids as string;
+        
+     
+        let userIds: string[] = [];
+        try {
+            userIds = ids ? JSON.parse(ids) : [];
+            if (!Array.isArray(userIds) || !userIds.every(id => typeof id === 'string')) {
+                 res.status(400).json({ msg: "Invalid IDs format" });
+                 return
+            }
+        } catch (error) {
+             res.status(400).json({ msg: "Invalid JSON format for IDs" });
+             return
         }
-    })
-    const avatars = users.map(user => ({
-        userId: user.id,
-        avatarId: user.avatar?.imageUrl
-    }))
 
-    res.status(200).json({ avatars })
-}
-catch(e){
-    res.status(400).json({msg:"error in metadata Bulk"})
-}
+   
+        const users = await prisma.user.findMany({
+            where: {
+                id: { in: userIds }
+            },
+            select: {
+                id: true,
+                avatar: true
+            }
+        });
 
-})
+
+        const avatars = users.map(user => ({
+            userId: user.id,
+            avatarId: user.avatar?.imageUrl || null  
+        }));
+
+        res.status(200).json({ avatars });
+    } catch (error) {
+        console.error("Error fetching user metadata:", error);
+        res.status(500).json({ msg: "Internal server error" });
+    }
+});
